@@ -1,7 +1,17 @@
 import Vue from 'vue'
-import { Button,Message,Form,FormItem,Input } from 'element-ui'
+import { Button,Message,Form,FormItem,Input,Container,
+    Header,Aside,Main,Menu,Submenu,MenuItemGroup,MenuItem,
+    Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
+    Switch,Tooltip,Pagination,Dialog,MessageBox
+    
+    } from 'element-ui'
 
 
 
-Vue.use(Button).use(Form).use(FormItem).use(Input)
+Vue.use(Button).use(Form).use(FormItem).use(Input).use(Container)
+    .use(Header).use(Aside).use(Main).use(Menu).use(MenuItemGroup)
+    .use(MenuItem).use(Submenu).use(Breadcrumb).use(BreadcrumbItem)
+    .use(Card).use(Row).use(Col).use(Table).use(TableColumn).use(Switch)
+    .use(Tooltip).use(Pagination).use(Dialog)
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
