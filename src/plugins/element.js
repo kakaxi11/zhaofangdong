@@ -3,7 +3,8 @@ import { Button,Message,Form,FormItem,Input,Container,
     Header,Aside,Main,Menu,Submenu,MenuItemGroup,MenuItem,
     Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
     Switch,Tooltip,Pagination,Dialog,MessageBox,Tag,Tree,Option,
-    Select,Cascader,Alert,Tabs,TabPane
+    Select,Cascader,Alert,Tabs,TabPane,Steps,Step,Checkbox,
+    CheckboxGroup,Upload,
     
     } from 'element-ui'
 
@@ -15,7 +16,8 @@ Vue.use(Button).use(Form).use(FormItem).use(Input).use(Container)
     .use(Card).use(Row).use(Col).use(Table).use(TableColumn).use(Switch)
     .use(Tooltip).use(Pagination).use(Dialog).use(Tag).use(Tree)
     .use(Select).use(Option).use(Cascader).use(Alert).use(Tabs)
-    .use(TabPane)
+    .use(TabPane).use(Steps).use(Step).use(CheckboxGroup)
+    .use(Checkbox).use(Upload)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
