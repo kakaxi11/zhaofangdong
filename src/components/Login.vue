@@ -5,7 +5,13 @@
       <div class="avatar_box">
         <img src="@/assets/logo.png" />
       </div>
-      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px">
+      <el-form
+        ref="loginFormRef"
+        :model="loginForm"
+        :rules="loginFormRules"
+        label-width="0px"
+        class="login_form"
+      >
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" prefix-icon="iconfont icon-user"></el-input>
@@ -18,9 +24,10 @@
             type="password"
           ></el-input>
         </el-form-item>
-        <el-form-item>
+        <!-- 按钮区域 -->
+        <el-form-item class="btns">
           <el-button type="primary" @click="login">登录</el-button>
-          <el-button type="info" @click="resetLoginForm()">重置</el-button>
+          <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -51,7 +58,8 @@ export default {
   },
   methods: {
     resetLoginForm() {
-      this.$refs.loginFormRef.resetFields() //重置为原来的值
+      //重置为原来的值
+      this.$refs.loginFormRef.resetFields()
     },
     login() {
       this.$refs.loginFormRef.validate(async valid => {
@@ -83,19 +91,38 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  .avatar_box {
+    height: 130px;
+    width: 130px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 0 10px #ddd;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    background-color: #fff;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #eee;
+    }
+  }
 }
-.avatar_box {
-  height: 130px;
-  width: 130px;
-  border: 1px solid #eee;
-  border-radius: 50%;
-  padding: 10px;
-  box-shadow: 0 0 10px #ddd;
+.btns {
+  display: flex;
+  justify-content: flex-end;
 }
-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: #eee;
+.login_form {
+  width: 24%;
+  position: absolute;
+  left: 38%;
+
+  bottom: 230px;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 </style>

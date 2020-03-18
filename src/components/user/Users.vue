@@ -2,7 +2,7 @@
   <div>
     <!-- 面包屑导航区域 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>活动管理</el-breadcrumb-item>
       <el-breadcrumb-item>活动列表</el-breadcrumb-item>
     </el-breadcrumb>
@@ -173,7 +173,7 @@ export default {
       queryInfo: {
         query: '',
         pagenum: 1,
-        pagesize: 2
+        pagesize: 5
       },
       userlist: [],
       total: 0,
@@ -249,7 +249,7 @@ export default {
       }
       this.userlist = res.data.users
       this.total = res.data.total
-      console.log(res)
+      console.log(this.userlist)
     },
     handleSizeChange(newSize) {
       // console.log(newSize)
@@ -264,10 +264,7 @@ export default {
     // 监听switch状态的改变
     async userStateChanged(userInfo) {
       console.log(userInfo)
-      const { data: res } = await this.$http.put(
-        `users/${userInfo.id}/state/
-                    ${userInfo.mg_state}`
-      )
+      const { data: res } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
       if (res.meta.status !== 200) {
         userInfo.mg_state = !userInfo.mg_state
         return this.$message.error('更新用户状态失败')
@@ -286,7 +283,7 @@ export default {
         const { data: res } = await this.$http.post('users', this.addForm)
 
         if (res.meta.status !== 201) {
-          this.$message.error('添加用户失败')
+          return this.$message.error('添加用户失败')
         }
         this.$message.success('添加用户成功!')
         this.addDialogVisible = false
@@ -313,18 +310,15 @@ export default {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return
         //发起修改用户信息的数据请求
-        const { data: res } = await this.$http.put(
-          'users/' + this.editForm.id,
-          {
-            email: this.editForm.email,
-            mobile: this.editForm.mobile
-          }
-        )
+        const { data: res } = await this.$http.put('users/' + this.editForm.id, {
+          email: this.editForm.email,
+          mobile: this.editForm.mobile
+        })
         if (res.meta.status !== 200) {
           return this.$message.error('更新用户信息失败')
         }
         //关闭对话框
-        this.editFormDialogVisible = false
+        this.editDialogVisible = false
         //刷新数据列表
         this.getUserList()
         //提示修改成功
@@ -334,22 +328,19 @@ export default {
     // 根据id删除对应的用户id
     async removeUserById(id) {
       //弹框询问用户是否删除数据
-      const confirmResult = await this.$confirm(
-        '此操作将永久删除该用户, 是否继续?',
-        '提示',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      ).catch(err => err)
+      const confirmResult = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
       //如果用户确认删除，则返回值为字符串confirm
-      //如果用户确认删除，则返回值为字符串cancel
+      //如果用户取消删除，则返回值为字符串cancel
+
       // console.log(confirmResult)
       if (confirmResult !== 'confirm') {
         return this.$message.info('已经取消删除')
       }
-      const { data: res } = await this.$http.delete('user/' + id)
+      const { data: res } = await this.$http.delete('users/' + id)
       if (res.meta.status !== 200) {
         return this.$message.error('删除用户失败!')
       }
@@ -375,12 +366,10 @@ export default {
       if (!this.selectedRoleId) {
         return this.$message.error('请选择要分配的角色')
       }
-      const { data: res } = await this.$http.put(
-        `users/${this.userInfo.id}/role`,
-        {
-          rid: this.selectedRoleId
-        }
-      )
+      const { data: res } = await this.$http.put(`users/${this.userInfo.id}/role`, {
+        rid: this.selectedRoleId
+      })
+      console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error('分配角色失败')
       }

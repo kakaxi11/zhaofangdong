@@ -4,11 +4,11 @@
     <el-header>
       <div>
         <img src="@/assets/heima.png" />
-        <span>电商管理系统</span>
+        <span>电商后台管理系统</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
     </el-header>
-    <!-- 主题区域 -->
+    <!-- 主体区域 -->
     <el-container>
       <!-- 侧边栏 -->
       <el-aside :width="isCollapse ?'64px':'200px'">
@@ -16,11 +16,11 @@
         <!-- 侧边栏菜单区 -->
         <el-menu
           background-color="#333744"
+          
           router
-          :default-active="activePath"
           text-color="#fff"
           active-text-color="#409EFF"
-          :unique-opened="true"
+          unique-opened
           :collapse="isCollapse"
           :collapse-transition="false"
         >
@@ -33,10 +33,9 @@
             </template>
             <!-- 二级菜单 -->
             <el-menu-item
-              :index="'/'+subItem.path"
+              :index="'/' + subItem.path"
               v-for="subItem in item.children"
               :key="subItem.id"
-              @click="saveNavState('/'+subItem.path)"
             >
               <template slot="title">
                 <i class="el-icon-menu"></i>
@@ -59,7 +58,6 @@
 export default {
   created() {
     this.getMenuList()
-    this.activePath = window.sessionStorage.getItem('activePath')
   },
   data() {
     return {
@@ -72,9 +70,7 @@ export default {
         '102': 'iconfont icon-danju',
         '145': 'iconfont icon-baobiao'
       },
-      isCollapse: false,
-      //被激活的链接地址
-      activePath: ''
+      isCollapse: false
     }
   },
   methods: {
@@ -92,11 +88,6 @@ export default {
     //点击按钮切换菜单的折叠与展开
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
-    },
-    // 保存链接的激活状态
-    saveNavState(activePath) {
-      window.sessionStorage.setItem('activePath', activePath)
-      this.activePath = activePath
     }
   }
 }
@@ -114,7 +105,7 @@ export default {
   align-items: center;
   color: #fff;
   font-size: 20px;
-  > div {
+  div {
     display: flex;
     align-items: center;
     span {

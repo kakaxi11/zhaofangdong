@@ -12,7 +12,7 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getGoodsList">
-            <el-button slot="append" icon="el-icon-search" @click="getGoodsList"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="handleCurrentChange(1)"></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
@@ -30,7 +30,12 @@
         </el-table-column>
         <el-table-column label="操作" width="130px">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+              @click="showEditDialog(scope.row.goods_id)"
+            ></el-button>
             <el-button
               type="danger"
               icon="el-icon-delete"
@@ -52,6 +57,27 @@
         background
       ></el-pagination>
     </el-card>
+    <!-- 修改商品对话框 -->
+    <el-dialog title="修改商品" :visible.sync="editDialogVisible" width="50%">
+      <el-form :model="editForm" ref="editFormRef" label-width="100px">
+        <el-form-item label="商品名称">
+          <el-input v-model="editForm.goods_name"></el-input>
+        </el-form-item>
+        <el-form-item label="商品价格">
+          <el-input v-model="editForm.goods_price"></el-input>
+        </el-form-item>
+        <el-form-item label="商品数量">
+          <el-input v-model="editForm.goods_number"></el-input>
+        </el-form-item>
+        <el-form-item label="商品重量">
+          <el-input v-model="editForm.goods_weight"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editGoods">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -66,7 +92,9 @@ export default {
       },
       //商品列表
       goodsList: [],
-      total: 0
+      total: 0,
+      editDialogVisible: false,
+      editForm: {}
     }
   },
   created() {
@@ -82,13 +110,10 @@ export default {
         return this.$message.error('获取商品列表失败')
       }
 
-      this.$message.success('获取商品列表成功')
-      console.log(res.data)
       this.goodsList = res.data.goods
       this.total = res.data.total
     },
 
-    //
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       this.getGoodsList()
@@ -102,20 +127,47 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).catch(err=>err)
-      if(confirmResult !== 'confirm'){
+      }).catch(err => err)
+      if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
 
-      const {data:res} = await this.$http.delete(`goods/${id}`)
-      if(res.meta.status !== 200){
+      const { data: res } = await this.$http.delete(`goods/${id}`)
+      if (res.meta.status !== 200) {
         return this.$message.error('删除失败')
       }
       this.$message.success('删除成功')
       this.getGoodsList()
     },
-    goAddpage(){
+    goAddpage() {
       this.$router.push('/goods/add')
+    },
+    //修改用户对话框展示
+    async showEditDialog(id) {
+      const { data: res } = await this.$http.get('goods/' + id)
+      if (res.meta.status !== 200) {
+        return this.message.error('查询用户信息失败')
+      }
+      this.editForm = res.data
+      console.log(res)
+      this.editDialogVisible = true
+    },
+    //修改失败
+    editGoods() {
+      this.$refs.editFormRef.validate(async valid => {
+        if (!valid) return
+        //发起修改用户信息的数据请求
+        const { data: res } = await this.$http.put('goods/' + this.editForm.goods_id, this.editForm)
+        if (res.meta.status !== 200) {
+          return this.$message.error(res.meta.msg)
+        }
+        //关闭对话框
+        this.editDialogVisible = false
+        //刷新数据列表
+        this.getGoodsList()
+        //提示修改成功
+        this.$message.success('修改成功')
+      })
     }
   }
 }

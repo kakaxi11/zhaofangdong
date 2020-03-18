@@ -5,7 +5,7 @@ import {
     Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn,
     Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, Tree, Option,
     Select, Cascader, Alert, Tabs, TabPane, Steps, Step, Checkbox,
-    CheckboxGroup, Upload,Timeline,TimelineItem
+    CheckboxGroup, Upload, Timeline, TimelineItem
 
 } from 'element-ui'
 
