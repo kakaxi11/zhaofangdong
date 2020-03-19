@@ -16,7 +16,6 @@
         <!-- 侧边栏菜单区 -->
         <el-menu
           background-color="#333744"
-          
           router
           text-color="#fff"
           active-text-color="#409EFF"

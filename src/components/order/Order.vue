@@ -32,9 +32,15 @@
           <template slot-scope="scope">{{scope.row.create_time | dateFormat}}</template>
         </el-table-column>
         <el-table-column label="操作">
-          <template>
+          <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showBox"></el-button>
             <el-button type="success" icon="el-icon-location" size="mini" @click="showProgressBox"></el-button>
+            <el-button
+              type="info"
+              icon="el-icon-s-order"
+              size="mini"
+              @click="showOrderFormDialog(scope.row)"
+            ></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -85,6 +91,18 @@
         >{{activity.context}}</el-timeline-item>
       </el-timeline>
     </el-dialog>
+
+    <!-- 订单详情对话框 -->
+    <el-dialog title="订单详情" :visible.sync="orderFormDialogVisible" width="50%">
+      <el-form ref="orderFormRef" :model="orderForm" label-width="160px">
+        <el-form-item label="发票类型：">{{orderForm.order_fapiao_title}}</el-form-item>
+        <el-form-item label="订单创建时间：">{{orderForm.create_time|dateFormat}}</el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="orderFormDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="orderFormDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -97,7 +115,7 @@ export default {
       queryInfo: {
         query: '',
         pagenum: 1,
-        pagesize: 10
+        pagesize: 15
       },
       total: 0,
       orderList: [],
@@ -124,7 +142,9 @@ export default {
       },
       cityData,
       progressVisible: false,
-      progressInfo: []
+      progressInfo: [],
+      orderFormDialogVisible: false,
+      orderForm: []
     }
   },
   created() {
@@ -165,6 +185,14 @@ export default {
       this.progressInfo = res.data
 
       this.progressVisible = true
+    },
+    //展示订单详情
+    async showOrderFormDialog(msg) {
+      const { data: res } = await this.$http.get('orders/' + msg.order_id)
+      console.log(res)
+      this.orderForm = res.data
+
+      this.orderFormDialogVisible = true
     }
   }
 }
