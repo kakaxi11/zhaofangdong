@@ -6,7 +6,7 @@ module.exports = {
         .entry('app')
         .clear()
         .add('@/main-prod.js')
-
+      //导入cdn资源
       config.set('externals', {
         vue: 'Vue',
         'vue-router': 'VueRouter',

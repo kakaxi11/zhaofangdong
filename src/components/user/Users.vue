@@ -219,7 +219,7 @@ export default {
       }
       this.userlist = res.data.users
       this.total = res.data.total
-      console.log(this.userlist)
+      // console.log(this.userlist)
     },
     handleSizeChange(newSize) {
       // console.log(newSize)
@@ -233,7 +233,7 @@ export default {
     },
     // 监听switch状态的改变
     async userStateChanged(userInfo) {
-      console.log(userInfo)
+      // console.log(userInfo)
       const { data: res } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
       if (res.meta.status !== 200) {
         userInfo.mg_state = !userInfo.mg_state
@@ -339,7 +339,7 @@ export default {
       const { data: res } = await this.$http.put(`users/${this.userInfo.id}/role`, {
         rid: this.selectedRoleId
       })
-      console.log(res)
+      // console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error('分配角色失败')
       }
