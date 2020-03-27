@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
 // import Login from '@/components/Login'
 const Login = () => import(/* webpackChunkName: "login_home_welcome" */ '@/components/Login')
 // import Home from '@/components/Home'
 const Home = () => import(/* webpackChunkName: "login_home_welcome" */ '@/components/Home')
 // import Welcome from '@/components/Welcome'
 const Welcome = () => import(/* webpackChunkName: "login_home_welcome" */ '@/components/Welcome')
-
 
 // import Users from '@/components/user/Users'
 const Users = () => import(/* webpackChunkName: "users_rights-roles" */ '@/components/user/Users')
@@ -17,18 +15,15 @@ const Rights = () => import(/* webpackChunkName: "users_rights-roles" */ '@/comp
 // import Roles from '@/components/power/Roles'
 const Roles = () => import(/* webpackChunkName: "users_rights-roles" */ '@/components/power/Roles')
 
-
 // import Cate from '@/components/goods/Cate'
 const Cate = () => import(/* webpackChunkName: "cate_params" */ '@/components/goods/Cate')
 // import Params from '@/components/goods/Params'
 const Params = () => import(/* webpackChunkName: "cate_params" */ '@/components/goods/Params')
 
-
 // import List from '@/components/goods/List'
 const List = () => import(/* webpackChunkName: "list_add" */ '@/components/goods/List')
 // import Add from '@/components/goods/Add'
 const Add = () => import(/* webpackChunkName: "list_add" */ '@/components/goods/Add')
-
 
 // import Order from '@/components/order/Order'
 const Order = () => import(/* webpackChunkName: "order_report" */ '@/components/order/Order')
@@ -42,7 +37,9 @@ const router = new VueRouter({
     { path: '/', redirect: '/login' },
     { path: '/login', component: Login },
     {
-      path: '/home', component: Home, redirect: '/welcome',
+      path: '/home',
+      component: Home,
+      redirect: '/welcome',
       children: [
         { path: '/welcome', component: Welcome },
         { path: '/users', component: Users },
@@ -53,9 +50,9 @@ const router = new VueRouter({
         { path: '/goods', component: List },
         { path: '/goods/add', component: Add },
         { path: '/orders', component: Order },
-        { path: '/reports', component: Report },
+        { path: '/reports', component: Report }
       ]
-    },
+    }
   ]
 })
 //挂载路由导航守卫
@@ -64,7 +61,7 @@ router.beforeEach((to, from, next) => {
   //from表示从哪个路径跳转而来
   //next()是一个函数表示放行
   //next() 放行next('/login') 强制跳转
-  if (to.path === '/login') return next();
+  if (to.path === '/login') return next()
   const tokenStr = window.sessionStorage.getItem('token')
   if (!tokenStr) return next('/login')
   next()

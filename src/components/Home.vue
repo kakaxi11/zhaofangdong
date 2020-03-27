@@ -11,34 +11,22 @@
     <!-- 主体区域 -->
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse ?'64px':'200px'">
+      <el-aside :width="isCollapse ? '64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!-- 侧边栏菜单区 -->
-        <el-menu
-          background-color="#333744"
-          router
-          text-color="#fff"
-          active-text-color="#409EFF"
-          unique-opened
-          :collapse="isCollapse"
-          :collapse-transition="false"
-        >
+        <el-menu background-color="#333744" router text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="isCollapse" :collapse-transition="false">
           <!-- 一级菜单 -->
           <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
             <!-- 一级菜单模板区 -->
             <template slot="title">
               <i :class="iconObj[item.id]"></i>
-              <span>{{item.authName}}</span>
+              <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item
-              :index="'/' + subItem.path"
-              v-for="subItem in item.children"
-              :key="subItem.id"
-            >
+            <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id">
               <template slot="title">
                 <i class="el-icon-menu"></i>
-                <span>{{subItem.authName}}</span>
+                <span>{{ subItem.authName }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -82,7 +70,7 @@ export default {
       const { data: res } = await this.$http.get('menus')
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
       this.menulist = res.data
-      console.log(res)
+      // console.log(res)
     },
     //点击按钮切换菜单的折叠与展开
     toggleCollapse() {

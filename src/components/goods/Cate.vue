@@ -56,16 +56,7 @@
       </tree-table>-->
 
       <!-- 最新表格 -->
-      <el-table
-        :data="cateList"
-        style="width: 100%;margin-bottom: 20px;"
-        row-key="cat_id"
-        border
-        :default-expand-all="false"
-        :tree-props="{children: 'children'}"
-        stripe
-        :highlight-current-row="false"
-      >
+      <el-table :data="cateList" style="width: 100%;margin-bottom: 20px;" row-key="cat_id" border :default-expand-all="false" :tree-props="{ children: 'children' }" :highlight-current-row="false">
         <!-- <el-table-column >
             <template slot-scope="scope">
               <span ></span>
@@ -76,35 +67,21 @@
         <el-table-column label="是否有效">
           <!-- 是否有效 -->
           <template slot-scope="scope">
-            <i
-              class="el-icon-success"
-              v-if="scope.row.cat_delete===false"
-              style="color:lightgreen;"
-            ></i>
+            <i class="el-icon-success" v-if="scope.row.cat_delete === false" style="color:lightgreen;"></i>
             <i class="el-icon-error" v-else style="color:red;"></i>
           </template>
         </el-table-column>
         <el-table-column label="排序">
           <template slot-scope="scope">
-            <el-tag size="mini" v-if="scope.row.cat_level===0">一级</el-tag>
-            <el-tag type="success" size="mini" v-else-if="scope.row.cat_level===1">二级</el-tag>
+            <el-tag size="mini" v-if="scope.row.cat_level === 0">一级</el-tag>
+            <el-tag type="success" size="mini" v-else-if="scope.row.cat_level === 1">二级</el-tag>
             <el-tag type="warning" size="mini" v-else>三级</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              size="mini"
-              icon="el-icon-edit"
-              @click="showEditGoodsCategoriesDialog(scope.row.cat_id)"
-            >编辑</el-button>
-            <el-button
-              type="danger"
-              size="mini"
-              icon="el-icon-delete"
-              @click="removeCateById(scope.row.cat_id)"
-            >删除</el-button>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditGoodsCategoriesDialog(scope.row.cat_id)">编辑</el-button>
+            <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeCateById(scope.row.cat_id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -121,34 +98,15 @@
       ></el-pagination>
     </el-card>
     <!-- 添加分类对话框 -->
-    <el-dialog
-      title="添加分类"
-      :visible.sync="addCateDialogVisible"
-      width="50%"
-      @close="addCateDialogClosed"
-    >
+    <el-dialog title="添加分类" :visible.sync="addCateDialogVisible" width="50%" @close="addCateDialogClosed">
       <!-- 添加分类的表单 -->
-      <el-form
-        :model="addCateForm"
-        :rules="addCateFormRules"
-        ref="addCateFormRef"
-        label-width="100px"
-      >
+      <el-form :model="addCateForm" :rules="addCateFormRules" ref="addCateFormRef" label-width="100px">
         <el-form-item label="分类名称:" prop="cat_name">
           <el-input v-model="addCateForm.cat_name"></el-input>
         </el-form-item>
         <el-form-item label="父级分类">
           <!-- options 用来指定数据源 -->
-          <el-cascader
-            v-model="selectedKeys"
-            :options="parentCateList"
-            :props="{ expandTrigger: 'hover', value:'cat_id',
-                    label:'cat_name',
-                    children:'children',}"
-            change-on-select
-            @change="parentCateChange"
-            clearable
-          ></el-cascader>
+          <el-cascader v-model="selectedKeys" :options="parentCateList" :props="cascaderProps" @change="parentCateChange" clearable width="50%"></el-cascader>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -159,8 +117,11 @@
     <!-- 编辑分类对话框 -->
     <el-dialog title="提示" :visible.sync="editCategoriesDialogVisible" width="50%">
       <el-form>
-        <el-form-item>
+        <el-form-item label="分类名称" label-width="100px">
           <el-input v-model="editForm.cat_name"></el-input>
+        </el-form-item>
+        <el-form-item label="是否有效" label-width="100px">
+          <el-switch v-model="editForm.cat_delete" active-color="#13ce66" inactive-color="#ff4949"> </el-switch>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -232,7 +193,9 @@ export default {
       editCategoriesDialogVisible: false,
 
       //
-      editForm: {}
+      editForm: {},
+      //级联选择器数据源
+      cascaderProps: { expandTrigger: 'hover', value: 'cat_id', label: 'cat_name', children: 'children', checkStrictly: 'true' }
     }
   },
 
@@ -266,7 +229,7 @@ export default {
     showAddCateDialog() {
       //先获取父级分类列表，
       this.getParentCateList()
-      //在展示对话框
+      //再展示对话框
       this.addCateDialogVisible = true
     },
     //获取父级分类的数据列表
@@ -326,7 +289,7 @@ export default {
         return this.$message.error(this.meta.msg)
       }
       this.editForm = res.data
-      console.log(this.editForm)
+      // console.log(this.editForm)
       this.editCategoriesDialogVisible = true
     },
 
@@ -336,14 +299,16 @@ export default {
         'categories/' + this.editForm.cat_id,
         {
           cat_name: this.editForm.cat_name
+          // cat_delete: this.editForm.cat_delete
         }
         // this.editForm.cat_name
         // this.editForm
       )
-      console.log(res)
-      // if (res.meta.status !== 200) {
-      //   return this.$message.error(this.meta.msg)
-      // }
+      // console.log(this.editForm.cat_delete)
+      // console.log(res)
+      if (res.meta.status !== 200) {
+        return this.$message.error(this.meta.msg)
+      }
       this.getCateList()
       this.editCategoriesDialogVisible = false
     },

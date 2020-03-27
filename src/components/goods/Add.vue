@@ -20,19 +20,8 @@
       </el-steps>
 
       <!-- tab栏区域 -->
-      <el-form
-        :model="addForm"
-        :rules="addFormRules"
-        ref="addFormRef"
-        label-width="100px"
-        label-position="top"
-      >
-        <el-tabs
-          v-model="activeIndex"
-          :tab-position="'left'"
-          :before-leave="beforeTabLeave"
-          @tab-click="tabClicked"
-        >
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" label-position="top">
+        <el-tabs v-model="activeIndex" :tab-position="'left'" :before-leave="beforeTabLeave" @tab-click="tabClicked">
           <el-tab-pane label="基本信息" name="0">
             <el-form-item label="商品名称" prop="goods_name">
               <el-input v-model="addForm.goods_name"></el-input>
@@ -47,12 +36,7 @@
               <el-input v-model="addForm.goods_number" type="number"></el-input>
             </el-form-item>
             <el-form-item label="商品分类" prop="goods_cat">
-              <el-cascader
-                v-model="addForm.goods_cat"
-                :options="cateList"
-                :props="{ expandTrigger: 'hover',label:'cat_name',value:'cat_id',children:'children' }"
-                @change="handleChange"
-              ></el-cascader>
+              <el-cascader v-model="addForm.goods_cat" :options="cateList" :props="cateProps" @change="handleChange"></el-cascader>
             </el-form-item>
           </el-tab-pane>
           <el-tab-pane label="商品参数" name="1">
@@ -60,7 +44,7 @@
             <el-form-item :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
               <!-- 复选框组 -->
               <el-checkbox-group v-model="item.attr_vals">
-                <el-checkbox :label="cb" v-for="(cb,i) in item.attr_vals" :key="i" border></el-checkbox>
+                <el-checkbox :label="cb" v-for="(cb, i) in item.attr_vals" :key="i" border></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-tab-pane>
@@ -71,14 +55,7 @@
           </el-tab-pane>
           <el-tab-pane label="商品图片" name="3">
             <!-- action表示图片要上传的api地址 -->
-            <el-upload
-              :action="uploadURL"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              list-type="picture"
-              :headers="headerObj"
-              :on-success="handleSuccess"
-            >
+            <el-upload :action="uploadURL" :on-preview="handlePreview" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
           </el-tab-pane>
@@ -93,7 +70,7 @@
     </el-card>
     <!-- 图片预览 -->
     <el-dialog title="图片预览" :visible.sync="previewVisible" width="50%">
-      <img :src="previewPath" alt class="previewImg" />
+      <img :src="previewPath" width="100%" />
     </el-dialog>
   </div>
 </template>
@@ -105,6 +82,7 @@ export default {
   data() {
     return {
       activeIndex: '0',
+
       //添加商品的表单数据对象
       addForm: {
         goods_name: '',
@@ -118,6 +96,7 @@ export default {
         goods_introduce: '',
         attrs: []
       },
+      cateProps: { expandTrigger: 'hover', label: 'cat_name', value: 'cat_id', children: 'children' },
       //
       addFormRules: {
         goods_name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
@@ -177,7 +156,7 @@ export default {
           return this.$message.error('获取动态参数列表失败')
         }
         res.data.forEach(item => {
-          item.attr_vals = item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
+          item.attr_vals = item.attr_vals.length === 0 ? [] : item.attr_vals.split(',')
         })
         this.manyTableData = res.data
       } else if (this.activeIndex === '2') {
@@ -196,21 +175,21 @@ export default {
       this.previewPath = file.response.data.url
       this.previewVisible = true
     },
-    //处理移除图片的操作
+    //处理移除图片的操作 TODO:reconsider
     handleRemove(file) {
       const filePath = file.response.data.tmp_path
       const i = this.addForm.pics.findIndex(x => x.pic === filePath)
       this.addForm.pics.splice(i, 1)
     },
-    //监听图片上传成功的事件
+    //监听图片上传成功的事件 TODO:reconsider
     handleSuccess(response) {
-      console.log(response)
+      // console.log(response)
       //拼接得到图片信息对象
       const picInfo = { pic: response.data.tmp_path }
       //将图片信息push到pics数组中
       this.addForm.pics.push(picInfo)
     },
-    //添加商品
+    //添加商品TODO:reconsider
     add() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) {
@@ -220,15 +199,15 @@ export default {
         //lodash cloneDeep(obj)
         const form = _.cloneDeep(this.addForm)
         form.goods_cat = form.goods_cat.join(',')
-        //处理动态参数，
+        //处理动态参数
         this.manyTableData.forEach(item => {
           const newInfo = {
             attr_id: item.attr_id,
-            attr_value: item.attr_vals.join(' ')
+            attr_value: item.attr_vals.join(',')
           }
           this.addForm.attrs.push(newInfo)
         })
-        //静态属性
+        //处理静态属性
         this.onlyTableData.forEach(item => {
           const newInfo = {
             attr_id: item.attr_id,
@@ -262,10 +241,6 @@ export default {
 <style lang="less" scoped>
 .el-checkbox {
   margin: 0 10px 0 0 !important;
-}
-
-.previewImg {
-  width: 100%;
 }
 
 .btnAdd {

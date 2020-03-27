@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 
 //全局样式
-import './assets/css/global.css'
+import '@/assets/css/global.css'
 // 字体图标
 import '@/assets/fonts/iconfont.css'
 //树形table 已弃用
@@ -42,8 +42,7 @@ Vue.config.productionTip = false
 //将富文本编辑器注册为全局可用的组件
 Vue.use(VueQuillEditor)
 
-Vue.filter('dateFormat', function (originVal) {
-
+Vue.filter('dateFormat', function(originVal) {
   const dt = new Date(originVal)
   const y = dt.getFullYear()
   const m = (dt.getMonth() + 1 + '').padStart(2, '0')
@@ -51,7 +50,6 @@ Vue.filter('dateFormat', function (originVal) {
   const hh = (dt.getHours() + '').padStart(2, '0')
   const mm = (dt.getMinutes() + '').padStart(2, '0')
   const ss = (dt.getSeconds() + '').padStart(2, '0')
-
 
   return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
 })

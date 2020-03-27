@@ -16,7 +16,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="addDialogVisible=true">添加用户</el-button>
+          <el-button type="primary" @click="addDialogVisible = true">添加用户</el-button>
         </el-col>
       </el-row>
       <!-- 用户列表区 -->
@@ -33,25 +33,10 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              icon="el-icon-edit"
-              size="mini"
-              @click="showEditDialog(scope.row.id)"
-            ></el-button>
-            <el-button
-              type="danger"
-              icon="el-icon-delete"
-              size="mini"
-              @click="removeUserById(scope.row.id)"
-            ></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button
-                type="warning"
-                icon="el-icon-setting"
-                size="mini"
-                @click="setRole(scope.row)"
-              ></el-button>
+              <el-button type="warning" icon="el-icon-setting" size="mini" @click="setRole(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -91,12 +76,7 @@
       </span>
     </el-dialog>
     <!-- 修改用户的对话框 -->
-    <el-dialog
-      title="修改用户"
-      :visible.sync="editDialogVisible"
-      width="50%"
-      @closed="editDialogClosed"
-    >
+    <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%" @closed="editDialogClosed">
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
         <el-form-item label="用户名">
           <el-input v-model="editForm.username" disabled></el-input>
@@ -119,24 +99,14 @@
     </el-dialog>
 
     <!-- 分配角色对话框 -->
-    <el-dialog
-      title="分配角色"
-      :visible.sync="setRoleDialogVisible"
-      width="50%"
-      @close="setRoleDialogClosed"
-    >
+    <el-dialog title="分配角色" :visible.sync="setRoleDialogVisible" width="50%" @close="setRoleDialogClosed">
       <div>
-        <p>当前的用户:{{userInfo.username}}</p>
-        <p>当前的角色:{{userInfo.role_name}}</p>
+        <p>当前的用户:{{ userInfo.username }}</p>
+        <p>当前的角色:{{ userInfo.role_name }}</p>
         <p>
           分配新角色:
           <el-select v-model="selectedRoleId" placeholder="请选择">
-            <el-option
-              v-for="item in rolesList"
-              :key="item.id"
-              :label="item.roleName"
-              :value="item.id"
-            ></el-option>
+            <el-option v-for="item in rolesList" :key="item.id" :label="item.roleName" :value="item.id"></el-option>
           </el-select>
         </p>
       </div>
@@ -153,7 +123,7 @@ export default {
   data() {
     var checkEmail = (rules, value, cb) => {
       //验证邮箱的正则表达式
-      const regEmail = /^([A-Za-z0-9_-])+\@([A-Za-z0-9_-])+(\.[A-Za-z0-9_-])+/
+      const regEmail = /^([A-Za-z0-9_-])+@([A-Za-z0-9_-])+(\.[A-Za-z0-9_-])+/
 
       if (regEmail.test(value)) {
         return cb()
@@ -386,5 +356,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

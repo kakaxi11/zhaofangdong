@@ -26,22 +26,12 @@
         <el-table-column label="商品价格(元)" prop="goods_price" width="95px"></el-table-column>
         <el-table-column label="商品重量" prop="goods_weight" width="70px"></el-table-column>
         <el-table-column label="创建时间" prop="add_time" width="140px">
-          <template slot-scope="scope">{{scope.row.add_time | dateFormat}}</template>
+          <template slot-scope="scope">{{ scope.row.add_time | dateFormat }}</template>
         </el-table-column>
         <el-table-column label="操作" width="130px">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              icon="el-icon-edit"
-              size="mini"
-              @click="showEditDialog(scope.row.goods_id)"
-            ></el-button>
-            <el-button
-              type="danger"
-              icon="el-icon-delete"
-              size="mini"
-              @click="removeById(scope.row.goods_id)"
-            ></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.goods_id)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeById(scope.row.goods_id)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -173,5 +163,4 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
