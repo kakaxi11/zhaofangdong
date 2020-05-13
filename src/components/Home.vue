@@ -70,6 +70,10 @@ export default {
         aname:'第三方登陆设置',
         path:'goods',
         },
+        {
+        aname:'支付设置',
+         path:'paySession'
+        },
      
 {
         aname:'快应用版本管理',
@@ -103,10 +107,10 @@ export default {
       aname:'充值配置',
         },
         {
-          anme:'举报用户',
+          aname:'举报用户',
         },
          {
-          anme:'意见反馈',
+          aname:'意见反馈',
         }
         ]
 

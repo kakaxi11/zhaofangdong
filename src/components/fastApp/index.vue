@@ -9,7 +9,7 @@
     <el-table
     :data="tableData"
     border
-    style="width: 97%">
+    style="width: 97.9%">
     <el-table-column
       prop="date"
       label="ID"
