@@ -89,18 +89,23 @@ export default {
          
         children:[
           {
+        aname:'用户统计',
+        },
+        {
         aname:'会员列表',
         },
         {
         aname:'会员等级',
         },
-        {
+{
         aname:'充值配置',
         },
-{
-        aname:'举报用户',
+        {
+          anme:'举报用户',
         },
-
+         {
+          anme:'意见反馈',
+        }
         ]
 
       },
