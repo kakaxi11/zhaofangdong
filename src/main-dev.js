@@ -16,6 +16,8 @@ import 'quill/dist/quill.bubble.css'
 //导入NProgress包对应的js和css
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
 import axios from 'axios'
 //配置请求根路径
@@ -34,6 +36,7 @@ axios.interceptors.response.use(config => {
   return config
 })
 Vue.prototype.$http = axios
+
 
 Vue.config.productionTip = false
 

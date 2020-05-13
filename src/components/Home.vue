@@ -90,15 +90,17 @@ export default {
         children:[
           {
         aname:'用户统计',
+        path:'userTotal'
         },
         {
         aname:'会员列表',
+        path:'userList'
         },
         {
         aname:'会员等级',
         },
-{
-        aname:'充值配置',
+        {  
+      aname:'充值配置',
         },
         {
           anme:'举报用户',

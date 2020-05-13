@@ -25,10 +25,10 @@ const Params = () => import(/* webpackChunkName: "cate_params" */ '@/components/
 // import List from '@/components/goods/List'
 const List = () => import(/* webpackChunkName: "list_add" */ '@/components/goods/List')
 // import Add from '@/components/goods/Add'
-const Add = () => import(/* webpackChunkName: "list_add" */ '@/components/goods/Add')
+const userList = () => import(/* webpackChunkName: "list_add" */ '@/views/userList/index.vue')
 
 // import Order from '@/components/order/Order'
-const Order = () => import(/* webpackChunkName: "order_report" */ '@/components/order/Order')
+const userTotal = () => import(/* webpackChunkName: "order_report" */ '@/views/userTotal/index.vue')
 // import Report from '@/components/report/Report'
 const fastApp = () => import(/* webpackChunkName: "order_report" */ '@/components/fastApp/index.vue')
 
@@ -50,8 +50,8 @@ const router = new VueRouter({
         { path: '/categories', component: Cate },
         { path: '/params', component: Params },
         { path: '/goods', component: List },
-        { path: '/goods/add', component: Add },
-        { path: '/orders', component: Order },
+        { path: '/userList', component: userList },
+        { path: '/userTotal', component: userTotal },
         { path: '/fastApp', component: fastApp },
         { path:'./paySession',component:paySession}
       ]
