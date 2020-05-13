@@ -9,11 +9,13 @@ const Home = () => import(/* webpackChunkName: "login_home_welcome" */ '@/compon
 const Welcome = () => import(/* webpackChunkName: "login_home_welcome" */ '@/components/Welcome')
 
 // import Users from '@/components/user/Users'
-const Users = () => import(/* webpackChunkName: "users_rights-roles" */ '@/components/user/Users')
+const system = () => import(/* webpackChunkName: "users_rights-roles" */ '@/components/system/index.vue')
 // import Rights from '@/components/power/Rights'
 const Rights = () => import(/* webpackChunkName: "users_rights-roles" */ '@/components/power/Rights')
 // import Roles from '@/components/power/Roles'
 const Roles = () => import(/* webpackChunkName: "users_rights-roles" */ '@/components/power/Roles')
+
+const paySession = () => import(/* webpackChunkName: "users_rights-roles" */ '@/components/paySession/index.vue')
 
 // import Cate from '@/components/goods/Cate'
 const Cate = () => import(/* webpackChunkName: "cate_params" */ '@/components/goods/Cate')
@@ -28,7 +30,7 @@ const Add = () => import(/* webpackChunkName: "list_add" */ '@/components/goods/
 // import Order from '@/components/order/Order'
 const Order = () => import(/* webpackChunkName: "order_report" */ '@/components/order/Order')
 // import Report from '@/components/report/Report'
-const Report = () => import(/* webpackChunkName: "order_report" */ '@/components/report/Report')
+const fastApp = () => import(/* webpackChunkName: "order_report" */ '@/components/fastApp/index.vue')
 
 Vue.use(VueRouter)
 
@@ -42,7 +44,7 @@ const router = new VueRouter({
       redirect: '/welcome',
       children: [
         { path: '/welcome', component: Welcome },
-        { path: '/users', component: Users },
+        { path: '/system', component: system },
         { path: '/rights', component: Rights },
         { path: '/roles', component: Roles },
         { path: '/categories', component: Cate },
@@ -50,21 +52,22 @@ const router = new VueRouter({
         { path: '/goods', component: List },
         { path: '/goods/add', component: Add },
         { path: '/orders', component: Order },
-        { path: '/reports', component: Report }
+        { path: '/fastApp', component: fastApp },
+        { path:'./paySession',component:paySession}
       ]
     }
   ]
 })
 //挂载路由导航守卫
-router.beforeEach((to, from, next) => {
-  //to表示要访问的路径
-  //from表示从哪个路径跳转而来
-  //next()是一个函数表示放行
-  //next() 放行next('/login') 强制跳转
-  if (to.path === '/login') return next()
-  const tokenStr = window.sessionStorage.getItem('token')
-  if (!tokenStr) return next('/login')
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   //to表示要访问的路径
+//   //from表示从哪个路径跳转而来
+//   //next()是一个函数表示放行
+//   //next() 放行next('/login') 强制跳转
+//   if (to.path === '/login') return next()
+//   const tokenStr = window.sessionStorage.getItem('token')
+//   if (!tokenStr) return next('/login')
+//   next()
+// })
 
 export default router

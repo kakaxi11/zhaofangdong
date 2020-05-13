@@ -3,8 +3,8 @@
     <!-- 头部区域 -->
     <el-header>
       <div>
-        <img src="@/assets/heima.png" />
-        <span>电商后台管理系统</span>
+       
+        <span>香漫画</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
     </el-header>
@@ -16,17 +16,19 @@
         <!-- 侧边栏菜单区 -->
         <el-menu background-color="#333744" router text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="isCollapse" :collapse-transition="false">
           <!-- 一级菜单 -->
+          
+      
           <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
             <!-- 一级菜单模板区 -->
             <template slot="title">
               <i :class="iconObj[item.id]"></i>
-              <span>{{ item.authName }}</span>
+              <span>{{item.name}}</span>
             </template>
             <!-- 二级菜单 -->
             <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id">
               <template slot="title">
                 <i class="el-icon-menu"></i>
-                <span>{{ subItem.authName }}</span>
+                <span>{{ subItem.aname }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -44,12 +46,92 @@
 <script>
 export default {
   created() {
-    this.getMenuList()
+    // this.getMenuList()
   },
   data() {
     return {
       //左侧菜单数据
-      menulist: [],
+    
+        menulist:[
+      {
+        name:'系统设置',
+        id:0,
+       
+        children:[
+          {
+        aname:'系统设置',
+         path:'system',
+        },
+        {
+        aname:'短信配置',
+         path:'rights',
+        },
+        {
+        aname:'第三方登陆设置',
+        path:'goods',
+        },
+     
+{
+        aname:'快应用版本管理',
+       path:'fastApp'
+        },
+
+        ]
+      },
+        {
+        name:'权限管理',
+        id:1,
+        
+        },
+        {
+        name:'会员管理',
+        id:2,
+         
+        children:[
+          {
+        aname:'会员列表',
+        },
+        {
+        aname:'会员等级',
+        },
+        {
+        aname:'充值配置',
+        },
+{
+        aname:'举报用户',
+        },
+
+        ]
+
+      },
+       {
+        name:'漫画管理',
+        id:3,
+        
+      },
+      {
+        name:'财务统计',
+        id:4,
+         
+        children:[
+          {
+        aname:'充值统计',
+        },
+        {
+        aname:'漫画充值',
+        },
+        {
+        aname:'广告投放回收',
+        },
+{
+        aname:'充值列表',
+        },
+
+        ]
+      }
+    ],
+     
+
       iconObj: {
         '125': 'iconfont icon-user',
         '103': 'iconfont icon-tijikongjian',
@@ -66,12 +148,12 @@ export default {
       this.$router.push('/login')
     },
     //获取所有请求
-    async getMenuList() {
-      const { data: res } = await this.$http.get('menus')
-      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
-      this.menulist = res.data
-      // console.log(res)
-    },
+    // async getMenuList() {
+    //   const { data: res } = await this.$http.get('menus')
+    //   if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+    //   // this.menulist = res.data
+    //   console.log(res)
+    // },
     //点击按钮切换菜单的折叠与展开
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
@@ -92,11 +174,14 @@ export default {
   align-items: center;
   color: #fff;
   font-size: 20px;
+    background-color: #18BC9C;
   div {
     display: flex;
     align-items: center;
+  
     span {
-      margin-left: 15px;
+      margin-left: 65px;
+      font-weight:600;
     }
   }
 }

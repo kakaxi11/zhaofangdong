@@ -1,26 +1,24 @@
 <template>
   <div>
-    <!-- 面包屑导航区域 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>权限管理</el-breadcrumb-item>
-      <el-breadcrumb-item>权限列表</el-breadcrumb-item>
-    </el-breadcrumb>
-    <!-- 卡片视图 -->
-    <el-card>
-      <el-table :data="rightsList" border stripe>
-        <el-table-column type="index"></el-table-column>
-        <el-table-column label="权限名称" prop="authName"></el-table-column>
-        <el-table-column label="路径" prop="path"></el-table-column>
-        <el-table-column label="权限等级" prop="level">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.level === '0'">1级</el-tag>
-            <el-tag type="success" v-else-if="scope.row.level === '1'">2级</el-tag>
-            <el-tag type="warning" v-else>3级</el-tag>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
+    <!-- 短信配置区域 -->
+  <div class="MessageHeader">
+    华为云短信
+    <el-button type="warning" size="small">查看错误码</el-button>
+    <el-button type="primary" size="small" class="refresh">刷新</el-button>
+  </div>
+  <el-card class="box-card">
+      <el-form :label-position="labelPosition" label-width="80px" >
+  <el-form-item :label="item.name" v-for="item in Mslist" :key="item.id" >
+    <el-input v-model="item.placeholder"  size="small" :type="item.id===8?'textarea':''"></el-input>
+  </el-form-item>
+</el-form>
+<el-button size="small" type="primary">保存</el-button>
+   <el-button size="small">重置</el-button>
+</el-card>
+ 
+
+
+
   </div>
 </template>
 
@@ -29,25 +27,69 @@ export default {
   data() {
     return {
       //权限列表
-      rightsList: []
+      labelPosition:'left',
+      Mslist:[
+         {
+          name: 'APP_KEY:',
+          id:0,
+          placeholder:'46fzO6jSD8fB0Vg51uFz96xJT9M4'
+        },
+         {
+          name: 'APP_SECRET:',
+          id:1,
+          placeholder:'wA26WzjtHN1T089vjvDXkEalTOM9'
+        },
+         {
+          name: '签名名称:',
+          id:2,
+          placeholder:'书香漫画'
+        },
+        {
+          name: '签名通道:',
+          id:3,
+          placeholder:'8819092320309'
+        },
+          {
+          name: '模板ID:',
+          id:4,
+          placeholder:'b429d1cc16d5453a9272649738ba5761'
+        },
+        
+      ]
     }
   },
   created() {
-    //获取所有权限
-    this.getRightsList()
+
   },
   methods: {
-    //获取权限列表
-    async getRightsList() {
-      const { data: res } = await this.$http.get('rights/list')
-      if (res.meta.status !== 200) {
-        return this.$message.error('请求失败')
-      }
-      this.rightsList = res.data
-      console.log(this.rightsList)
-    }
+ 
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped>
+.MessageHeader{
+  display:flex;
+  justify-content:space-between;
+ .refresh{
+   margin-left:73%;
+ }
+
+ padding:0 0 10px 0px;
+  border-bottom: 2px solid #ccc;
+}
+.el-form{
+  white-space: nowrap;
+  .el-input{
+    width:510px;
+    margin-left:35px;
+
+  }
+}
+.box-card{
+  margin-top:30px;
+}
+.el-form-item{
+  margin-bottom:15px;
+}
+</style>

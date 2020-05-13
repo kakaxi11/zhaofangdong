@@ -38,8 +38,8 @@ import {
   Checkbox,
   CheckboxGroup,
   Upload,
-  Timeline,
-  TimelineItem
+  Autocomplete,
+  Radio
 } from 'element-ui'
 
 Vue.use(Button)
@@ -78,8 +78,8 @@ Vue.use(Button)
   .use(CheckboxGroup)
   .use(Checkbox)
   .use(Upload)
-  .use(Timeline)
-  .use(TimelineItem)
+  .use(Autocomplete)
+  .use(Radio)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
