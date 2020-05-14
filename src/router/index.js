@@ -18,18 +18,18 @@ const system = () =>
 const Rights = () =>
     import ( /* webpackChunkName: "users_rights-roles" */ '@/components/power/Rights')
     // import Roles from '@/components/power/Roles'
-const Roles = () =>
-    import ( /* webpackChunkName: "users_rights-roles" */ '@/components/power/Roles')
+const Report = () =>
+    import ( /* webpackChunkName: "users_rights-roles" */ '@/views/Report/index.vue')
 
 const paySession = () =>
     import ( /* webpackChunkName: "users_rights-roles" */ '@/components/paySession/index.vue')
 
 // import Cate from '@/components/goods/Cate'
-const Cate = () =>
-    import ( /* webpackChunkName: "cate_params" */ '@/components/goods/Cate')
+const paySetting = () =>
+    import ( /* webpackChunkName: "cate_params" */ '@/views/paySetting/index.vue')
     // import Params from '@/components/goods/Params'
-const Params = () =>
-    import ( /* webpackChunkName: "cate_params" */ '@/components/goods/Params')
+const userLevel = () =>
+    import ( /* webpackChunkName: "cate_params" */ '@/views/userLevel/index.vue')
 
 // import List from '@/components/goods/List'
 const List = () =>
@@ -44,6 +44,17 @@ const userTotal = () =>
     // import Report from '@/components/report/Report'
 const fastApp = () =>
     import ( /* webpackChunkName: "order_report" */ '@/components/fastApp/index.vue')
+const suggestion = () =>
+    import ( /* webpackChunkName: "order_report" */ '@/views/suggestion/index.vue')
+const PaymentStatistics = () =>
+    import ( /* webpackChunkName: "order_report" */ '@/views/PaymentStatistics/index.vue')
+const cartoonPay = () =>
+    import ( /* webpackChunkName: "order_report" */ '@/views/cartoonPay/index.vue')
+const Advertisement = () =>
+    import ( /* webpackChunkName: "order_report" */ '@/views/Advertisement/index.vue')
+const PayList = () =>
+    import ( /* webpackChunkName: "order_report" */ '@/views/PayList/index.vue')
+    
 
 Vue.use(VueRouter)
 
@@ -59,14 +70,19 @@ const router = new VueRouter({
                     { path: '/welcome', component: Welcome },
                     { path: '/system', component: system },
                     { path: '/rights', component: Rights },
-                    { path: '/roles', component: Roles },
-                    { path: '/categories', component: Cate },
-                    { path: '/params', component: Params },
+                    { path: '/Report', component: Report },
+                    { path: '/paySetting', component: paySetting },
+                    { path: '/userLevel', component: userLevel },
                     { path: '/goods', component: List },
                     { path: '/userList', component: userList },
                     { path: '/userTotal', component: userTotal },
                     { path: '/paySession', component: paySession },
-                    { path: '/fastApp', component: fastApp }
+                    { path: '/fastApp', component: fastApp },
+                    {path:'/suggestion',component:suggestion},
+                    {path:'/PaymentStatistics',component:PaymentStatistics},
+                    {path:'/cartoonPay',component:cartoonPay},
+                    {path:'/Advertisement',component:Advertisement},
+                    {path:'/PayList',component:PayList}
 
                 ]
             }

@@ -76,7 +76,7 @@ export default {
    margin-left:73%;
  }
 
- padding:0 0 10px 0px;
+ padding:0 10px 10px 0px;
   border-bottom: 2px solid #ccc;
 }
 .el-form{

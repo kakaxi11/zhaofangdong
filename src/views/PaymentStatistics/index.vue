@@ -1,33 +1,43 @@
 <template>
-    <div>
-       <div class="MessageHeader">
-    <div>
-         <el-button size="small" type="primary" plain>选择时间</el-button>
-    <el-button  size="small" type="primary" plain>查询</el-button>
-    </div>
-   
-    <el-button type="primary" size="small" class="refresh">刷新</el-button>
+  <div>
+      <p>充值统计图表</p>
+        <div class="MessageHeader">
+        <div>
+            <el-button type="primary" size="small" plain>选择时间</el-button>
+            <el-button type="primary" size="small" plain>查询</el-button>
+        </div> 
+   <el-button type="primary" size="small" >刷新</el-button>
   </div>
-    
-    <el-card class="card-box">
-        <h1>用户概况</h1>
-    <div>
-        <span>
-            <p class="weight">984123</p>
-            <p>总用户人数</p>
-        </span>
-        <span>
-            <p class="weight">984123</p>
-            <p>总用户人数</p>
-        </span>
-
-    </div>
-    </el-card>
 
 
-  <div id="myChart" :style="{width: '1200px', height: '450px'}"></div>
-   
- <el-table
+ <el-row :gutter="20">
+  <el-col :span="6"><div class="bg">昨日充值</div></el-col>
+  <el-col :span="6"><div class="bg">今日充值</div></el-col>
+  <el-col :span="6"><div class="bg">本月充值</div></el-col>
+  <el-col :span="6"><div class="bg">总充值</div></el-col>
+</el-row>
+
+    <el-row :gutter="20">
+  <el-col :span="6"><div class="grid-content bg-blue">
+      app充值
+      </div></el-col>
+  <el-col :span="6"><div class="grid-content bg-aqua">
+        今日充值
+      </div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple">  app充值</div></el-col>
+  <el-col :span="6"><div class="grid-content bg-green">  app充值</div></el-col>
+</el-row>
+  <el-row :gutter="20">
+  <el-col :span="6"><div class="grid-content bg-blue"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-aqua"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-green"></div></el-col>
+</el-row>
+  
+
+    <div id="myChart" :style="{width: '1200px', height: '450px'}"></div>
+
+    <el-table
     :data="tableData"
     border
     style="width: 97%">
@@ -66,18 +76,19 @@
       >
     </el-table-column>
   </el-table>
-   <el-pagination
+
+    <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[5, 10, 15, 20]"
-      :page-size="5"
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="100"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="20">
+      :total="400">
     </el-pagination>
+ 
 
-
-    </div>
+  </div>
 </template>
 
 <script>
@@ -205,30 +216,66 @@ export default {
 </script>
 
 <style lang="less" scoped>
+p{
+    font-size:13px;
+}
 .MessageHeader{
   display:flex;
   justify-content:space-between;
  .refresh{
+   margin-left:73%;
  }
-  padding:0 10px 10px 0px;
+
+ padding:0 10px 10px 0px;
   border-bottom: 2px solid #ccc;
 }
-.card-box{
-    margin-top:7px;
-    height:130px;
-    h1{
-        transform:translateY(-30px);
-        font-weight:500;
+  .el-row {
+    margin-bottom: 20px;
+    margin-top:10px;
+    color:white;
+    text-align:center;
+
+    &:last-child {
+      margin-bottom: 0;
+     
     }
-    div{
-         transform:translateY(-35px);
-        display:flex;
-        justify-content:space-around;
-        font-size:14px;
-        .weight{
-            font-weight:600;
-        }
-    }
-    margin-bottom:20px;
+  }
+  .el-col {
+    border-radius: 4px;
+  
+    
+    
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #605ca8), color-stop(1, #9491c4)) !important;
+  }
+  .bg-green{
+    background:  -webkit-gradient(linear, left bottom, left top, color-stop(0, #00a65a), color-stop(1, #00ca6d)) !important;
+  }
+  .bg-blue {
+    background-color: #0073b7 !important;
 }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+    height:150px;
+    line-height:150px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+    .bg{
+        font-size:19px;
+        color: rgb(66, 66, 66);
+    }
+    .bg-aqua{
+        background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #00c0ef), color-stop(1, #14d1ff)) !important;
+    }
 </style>

@@ -39,8 +39,17 @@ import {
   CheckboxGroup,
   Upload,
   Autocomplete,
-  Radio
+  Radio,
+  DropdownMenu,
+  DropdownItem,
+  Dropdown,
+
+
 } from 'element-ui'
+
+
+
+
 
 Vue.use(Button)
   .use(Form)
@@ -80,6 +89,10 @@ Vue.use(Button)
   .use(Upload)
   .use(Autocomplete)
   .use(Radio)
+  .use(DropdownMenu)
+  .use(DropdownItem)
+  .use(Dropdown)
+  
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

@@ -1,7 +1,18 @@
 <template>
   <div>
-    <p>会员列表</p>
-      <el-table
+      <p>投放回收统计列表</p>
+        <div class="MessageHeader">
+            <div>
+    <el-button type="primary" size="small" plain>选择时间</el-button>
+        <el-button type="primary" size="small" plain>查询</el-button>
+            <el-button type="warning" size="small"  class="Excel">导出Excel</el-button>
+            </div>
+
+   
+   <el-button type="primary" size="small" >刷新</el-button>
+  </div>
+  
+  <el-table
     :data="tableData"
     border
     style="width: 97%">
@@ -40,17 +51,18 @@
       >
     </el-table-column>
   </el-table>
-   <el-pagination
+
+    <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[5, 10, 15, 20]"
-      :page-size="5"
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="100"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="20">
+      :total="400">
     </el-pagination>
+
   </div>
-  
 </template>
 
 <script>
@@ -59,6 +71,19 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+p{
+    font-size:13px;
+}
+.MessageHeader{
+  display:flex;
+  justify-content:space-between;
+ .refresh{
+   margin-left:73%;
+ }
+
+ padding:0 10px 10px 0px;
+  border-bottom: 2px solid #ccc;
+}
 
 </style>

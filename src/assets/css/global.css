@@ -5,7 +5,7 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  min-width: 1366px;
+  min-width: 766px;
 }
 
 .el-breadcrumb {
@@ -36,4 +36,7 @@ body,
 
 .ql-editor {
   min-height: 300px;
+}
+.el-main{
+  padding:15px;
 }

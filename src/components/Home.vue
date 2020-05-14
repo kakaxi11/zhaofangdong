@@ -3,7 +3,7 @@
     <!-- 头部区域 -->
     <el-header>
       <div>
-       
+    
         <span>香漫画</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
@@ -11,7 +11,7 @@
     <!-- 主体区域 -->
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse ? '64px' : '200px'">
+      <el-aside :width="isCollapse?'64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!-- 侧边栏菜单区 -->
         <el-menu background-color="#333744" router text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="isCollapse" :collapse-transition="false">
@@ -21,13 +21,13 @@
           <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
             <!-- 一级菜单模板区 -->
             <template slot="title">
-              <i :class="iconObj[item.id]"></i>
+              <i :class="'iconfont '+iconFontList[item.id]"></i>
               <span>{{item.name}}</span>
             </template>
             <!-- 二级菜单 -->
             <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id">
               <template slot="title">
-                <i class="el-icon-menu"></i>
+                <i class="iconfont icon-normal"></i>
                 <span>{{ subItem.aname }}</span>
               </template>
             </el-menu-item>
@@ -51,7 +51,19 @@ export default {
   data() {
     return {
       //左侧菜单数据
-    
+ iconFontList:[
+   'icon-xitongshezhi',
+   'icon-quanxianguanli',
+'icon-kehuhuiyuanguanli',
+'icon-icon-',
+'icon-caiwu',
+'icon-rizhiguanli'
+ ],
+
+
+
+
+
         menulist:[
       {
         name:'系统设置',
@@ -102,15 +114,19 @@ export default {
         },
         {
         aname:'会员等级',
+        path:'userLevel'
         },
         {  
       aname:'充值配置',
+      path:'paySetting'
         },
         {
           aname:'举报用户',
+          path:'Report'
         },
          {
           aname:'意见反馈',
+          path:'suggestion'
         }
         ]
 
@@ -127,18 +143,27 @@ export default {
         children:[
           {
         aname:'充值统计',
+        path:'PaymentStatistics'
         },
         {
         aname:'漫画充值',
+        path:'cartoonPay'
         },
         {
         aname:'广告投放回收',
+        path:'Advertisement'
         },
 {
         aname:'充值列表',
+        path:'PayList'
         },
 
+
         ]
+      }
+      ,{
+        name:'日志管理',
+        id:5,
       }
     ],
      
@@ -150,7 +175,8 @@ export default {
         '102': 'iconfont icon-danju',
         '145': 'iconfont icon-baobiao'
       },
-      isCollapse: false
+      // width:window.document.documentElement.clientWidth,
+      isCollapse:false
     }
   },
   methods: {
@@ -168,7 +194,9 @@ export default {
     //点击按钮切换菜单的折叠与展开
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
-    }
+      console.log(this.width);
+    },
+    //实时监听屏幕获取clientwitdh传递给this.widtth。
   }
 }
 </script>
