@@ -54,7 +54,13 @@ const Advertisement = () =>
     import ( /* webpackChunkName: "order_report" */ '@/views/Advertisement/index.vue')
 const PayList = () =>
     import ( /* webpackChunkName: "order_report" */ '@/views/PayList/index.vue')
-    
+const AuthorityList= () =>
+    import ( /* webpackChunkName: "order_report" */ '@/views/AuthorityList/index.vue')
+const echars= () =>
+    import ( /* webpackChunkName: "order_report" */ '@/views/Charts/LineMarker.vue')    
+const AuthoUserList= () =>
+    import ( /* webpackChunkName: "order_report" */ '@/views/AuthoUserList/index.vue')    
+
 
 Vue.use(VueRouter)
 
@@ -82,7 +88,10 @@ const router = new VueRouter({
                     {path:'/PaymentStatistics',component:PaymentStatistics},
                     {path:'/cartoonPay',component:cartoonPay},
                     {path:'/Advertisement',component:Advertisement},
-                    {path:'/PayList',component:PayList}
+                    {path:'/PayList',component:PayList},
+                    {path:'/AuthorityList',component:AuthorityList},
+                    {path:'/echars',component:echars},
+                    {path:'/AuthoUserList',component:AuthoUserList}
 
                 ]
             }

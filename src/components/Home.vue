@@ -97,7 +97,21 @@ export default {
         {
         name:'权限管理',
         id:1,
-        
+        children:[
+            {
+        aname:'管理员列表',
+         path:'AuthorityList',
+        },
+        {
+        aname:'用户组列表',
+         path:'echars'
+        },
+        {
+        aname:'菜单规则',
+        path:'AuthoUserList'
+        }
+
+        ]
         },
         {
         name:'会员管理',
