@@ -62,6 +62,18 @@
 
 <script>
 export default {
+    data(){
+      return{
+        paylist:[],
+        queryInfo:{
+          size:1
+        }
+      }
+    },
+  created(){
+    this.$http.get('admin/cartoon/recharge/info',)
+
+  }
 
 }
 </script>

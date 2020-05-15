@@ -13,11 +13,11 @@
         <h1>用户概况</h1>
     <div>
         <span>
-            <p class="weight">984123</p>
+            <p class="weight">{{userTotal.usersNumber}}</p>
             <p>总用户人数</p>
         </span>
         <span>
-            <p class="weight">984123</p>
+            <p class="weight">{{userTotal.usersNumber}}</p>
             <p>总用户人数</p>
         </span>
 
@@ -150,9 +150,17 @@ export default {
               orgNum:15485,
               regCapital:1907
           }
-      ]
+      ],
+      userTotal:[]
     }
   },
+   created(){
+      this.$http.get('admin/index').then(res=>{
+          console.log(res);
+          this.userTotal = res.data.data
+      })
+     
+   },
   mounted(){
     this.drawLine();
   },

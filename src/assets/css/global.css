@@ -15,11 +15,13 @@ body,
 
 .el-card {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+  margin-top:12px;
 }
 
 .el-table {
   margin-top: 15px;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .el-pagination {
@@ -39,4 +41,10 @@ body,
 }
 .el-main{
   padding:15px;
+}
+.el-table th>.cell {
+  white-space: nowrap;
+}
+.el-table .cell {
+  white-space: nowrap;
 }

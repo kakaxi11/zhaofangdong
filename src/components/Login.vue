@@ -7,8 +7,8 @@
       </div>
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
         <!-- 用户名 -->
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="iconfont icon-user"></el-input>
+        <el-form-item prop="mobile">
+          <el-input v-model="loginForm.mobile" prefix-icon="iconfont icon-user"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
@@ -31,8 +31,8 @@ export default {
     return {
       //这是登录表单的数据登陆对象
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        'mobile' : 'test',
+        'password': '123321ss~'
       },
       loginFormRules: {
         username: [
@@ -52,8 +52,18 @@ export default {
       this.$refs.loginFormRef.resetFields()
     },
     login() {
-     
-        this.$router.push('/home')
+      //validate回调函数判断表单验证是否通过,valid为真则表示通过验证
+      this.$refs.loginFormRef.validate(async valid=>{
+        if(!valid)return
+         const res = await this.$http.post('oauth2/admin/login', this.loginForm)
+         console.log(res);  
+         //从接口获取token并存入sessionStorage
+        if (res.data.code !== 200) return this.$message.error('登录失败')
+        this.$message.success('登录成功')
+        window.sessionStorage.setItem('token', 'Bearer '+res.data.data.token)
+        console.log(res.data.data.token);       
+         this.$router.push('/home')
+      })  
    }
   }
 }

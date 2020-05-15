@@ -8,7 +8,7 @@
   </div>
   
   <el-table
-    :data="tableData"
+    :data="suggestionList"
     border
     style="width: 97%">
     <el-table-column
@@ -17,12 +17,12 @@
       width="200">
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="content"
       label="总新增用户"
       width="280">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="username"
       label="头条"
       width="280"
       >
@@ -62,6 +62,21 @@
 
 <script>
 export default {
+    data(){
+        return{
+           queryInfo:{
+            page:1,
+            size:5
+          },
+          suggestionList:[]
+        }
+    },
+    created(){
+      this.$http.get('admin/user/feedback',{params:this.queryInfo}).then(res=>{
+       this.suggestionList = res.data.data.list
+      })
+
+    }
 
 }
 </script>

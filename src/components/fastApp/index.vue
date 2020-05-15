@@ -9,27 +9,27 @@
     <el-table
     :data="tableData"
     border
-    style="width: 97.9%">
+    >
     <el-table-column
       prop="date"
       label="ID"
-      width="270">
+     >
     </el-table-column>
     <el-table-column
       prop="name"
       label="平台"
-      width="338">
+     >
     </el-table-column>
     <el-table-column
       prop="address"
       label="版本"
-      width="490"
+     
       >
     </el-table-column>
      <el-table-column
       prop="state"
       label="版本状态"
-      width="530"
+      
       >
     </el-table-column>
   </el-table>

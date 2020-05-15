@@ -1,10 +1,28 @@
 <template>
   <div>
-     <div class="MessageHeader">
-           权限列表
-              
+      <p>签到推送</p>
+     <div class="MessageHeader"> 
+          
+    <el-select v-model="value" placeholder="支付状态" size="small" style="width:160px">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
 
-   <el-button  size="small" type="primary" >添加</el-button> 
+   <el-select v-model="value" placeholder="支付状态" size="small" style="width:160px;">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+
+   <el-button  size="small" type="primary" >搜索</el-button> 
+
    <el-button  size="small"  type="primary" >显示全部</el-button>
    <el-button  size="small"  type="warning" >批量删除</el-button>
   </div>
@@ -14,11 +32,11 @@
       <el-table
     :data="tableData"
     border
-  >
+    >
     <el-table-column
       prop="date"    
       label="日期"
-  >
+      min-width="60">
     </el-table-column>
     <el-table-column
       prop="name"
@@ -28,25 +46,22 @@
     <el-table-column
       prop="address"
       label="头条"
-    
+     
       >
     </el-table-column>
      <el-table-column
       prop="state"
       label="oppo"
-     
       >
     </el-table-column>
     <el-table-column
       prop="state"
       label="APP应用"
-
       >
     </el-table-column>
     <el-table-column
       prop="state"
       label="其他（未知渠道）"
-      
       >
     </el-table-column>
   </el-table>
@@ -73,13 +88,21 @@ export default {
 .MessageHeader{
   display:flex;
   align-items: center;
- .refresh{
-   margin-left:73%;
+  justify-content: flex-start;
+
+ .el-input{
+   width:300px;
+   margin:0 20px;
  }
- .el-button{
-     margin-left:20px;
- }
+    .el-button{
+        margin-left:12px;
+
+    }
+    .el-select{
+        margin-left:17px;
+    }
  padding:0 10px 10px 0px;
   border-bottom: 2px solid #ccc;
 }
+
 </style>

@@ -8,11 +8,11 @@
   </div>
   
   <el-table
-    :data="tableData"
+    :data="ReportList"
     border
     style="width: 97%">
     <el-table-column
-      prop="date"    
+      prop="username"    
       label="日期"
       width="200">
     </el-table-column>
@@ -62,6 +62,21 @@
 
 <script>
 export default {
+  data(){
+    return{
+      queryInfo:{
+        page:1,
+        size:5
+      },
+      ReportList:[]
+    }
+  },
+  created(){
+      this.$http.get('admin/report/get',{params:this.queryInfo}).then(res=>{
+       this.ReportList = res.data.data.list
+      })
+
+    }
 
 }
 </script>

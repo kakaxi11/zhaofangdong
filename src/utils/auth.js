@@ -13,3 +13,5 @@ export function setToken(token) {
 export function removeToken() {
   return Cookies.remove(TokenKey)
 }
+
+//utils文件 以及echars 来自vue-element-admin 若需要优化则删除

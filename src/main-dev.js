@@ -15,19 +15,20 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 //导入NProgress包对应的js和css
 import NProgress from 'nprogress'
+import moment from 'moment'
 import 'nprogress/nprogress.css'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
 import axios from 'axios'
 //配置请求根路径
-axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
-    // axios.defaults.baseURL = 'http://119.23.53.78:8888/api/private/v1'
+axios.defaults.baseURL = 'http://192.168.1.8:8060/'
+
 
 //再request拦截器中，展示进度条 NProgress.start()
 axios.interceptors.request.use(config => {
         NProgress.start()
-        config.headers.Authorization = window.sessionStorage.getItem('token')
+        config.headers.Authorization ="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiY3JlYXRlZCI6MTU4OTUyNDg2MTYzNywicm9sZXMiOiJbXCJhZG1pblwiXSIsImlkIjoiMyIsImV4cCI6MTU5MDEyOTY2MSwidG9rZW4iOiI1OWU3MmY1YWNmZjc0MjQ4YmMwYWQzYmY2MTZkNjk0ZCJ9.JDgl1Je5rR5XrCc5yRwU5OprQskTLnmRiyg7DP0monjXWMP34gSH1-6ZuxCdJFZOCpej33534Hp8qknD39VGTQ"
         return config
     })
     //在response拦截器中，隐藏进度条 NProgress.done()
@@ -36,7 +37,7 @@ axios.interceptors.response.use(config => {
     return config
 })
 Vue.prototype.$http = axios
-
+Vue.prototype.$moment = moment
 
 Vue.config.productionTip = false
 

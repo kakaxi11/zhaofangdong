@@ -207,7 +207,7 @@ export default {
           smooth: true,
           symbol: 'circle',
           symbolSize: 5,
-          showSymbol: false,
+          showSymbol: true,
           lineStyle: {
             normal: {
               width: 1
