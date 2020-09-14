@@ -3,36 +3,36 @@
     <div class="login_box">
       <!-- 头像 -->
       <div class="avatar_box">
-        <img src="@/assets/logo.png" />
+        <h2>系统登录</h2>
       </div>
-      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
-        <!-- 用户名 -->
-        <el-form-item prop="mobile">
-          <el-input v-model="loginForm.mobile" prefix-icon="iconfont icon-user"></el-input>
-        </el-form-item>
-        <!-- 密码 -->
-        <el-form-item prop="password">
-          <el-input v-model="loginForm.password" prefix-icon="iconfont icon-3702mima" type="password"></el-input>
-        </el-form-item>
-        <!-- 按钮区域 -->
-        <el-form-item class="btns">
-          <el-button type="primary" @click="login">登录</el-button>
-          <el-button type="info" @click="resetLoginForm">重置</el-button>
-        </el-form-item>
-      </el-form>
+ <el-form class="login-form" status-icon  ref="loginFormRef" :model="loginForm" label-width="0">
+    <el-form-item prop="username">
+      <el-input size="small"  v-model="loginForm.username"  placeholder="请输入用户名">
+        <i slot="prefix" class="iconfont icon-yonghu"></i>
+      </el-input>
+    </el-form-item>
+    <el-form-item prop="password">
+      <el-input size="small" @keyup.enter.native="login" type="password" v-model="loginForm.password" placeholder="请输入密码">
+        <i slot="prefix" class="iconfont icon-mimayanzhengma"></i>
+      </el-input>
+    </el-form-item>
+    <el-form-item class="btns">
+      <el-button type="primary" size="small" @click.native.prevent="login" class="login-submit">登录</el-button>
+      <el-button type="info" size="small" @click="resetLoginForm">重置</el-button>
+    </el-form-item>
+  </el-form>
     </div>
     <!-- 登陆表单区域 -->
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
       //这是登录表单的数据登陆对象
       loginForm: {
-        'mobile' : 'test',
-        'password': '123321ss~'
+        'username':null,
+        'password':null,
       },
       loginFormRules: {
         username: [
@@ -52,19 +52,20 @@ export default {
       this.$refs.loginFormRef.resetFields()
     },
     login() {
-      //validate回调函数判断表单验证是否通过,valid为真则表示通过验证
+      // validate回调函数判断表单验证是否通过,valid为真则表示通过验证
       this.$refs.loginFormRef.validate(async valid=>{
         if(!valid)return
-         const res = await this.$http.post('oauth2/admin/login', this.loginForm)
+         const res = await this.$http.post('api/auth/login', this.loginForm)
          console.log(res);  
          //从接口获取token并存入sessionStorage
         if (res.data.code !== 200) return this.$message.error('登录失败')
         this.$message.success('登录成功')
-        window.sessionStorage.setItem('token', 'Bearer '+res.data.data.token)
-        console.log(res.data.data.token);       
+        window.sessionStorage.setItem('token', 'Bearer '+res.data.data.authorization) 
+        console.log(res.data.data.authorization);       
          this.$router.push('/home')
       })  
-   }
+        this.$router.push('/home') 
+   }  
   }
 }
 </script>
@@ -76,28 +77,30 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image:url(../assets/login1.png);
 }
 .login_box {
-  width: 450px;
-  height: 300px;
+  width: 447px;
+  height: 271px;
   background-color: #fff;
-  border-radius: 3px;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  margin-bottom:110px;
+  overflow: hidden;
   .avatar_box {
-    height: 130px;
-    width: 130px;
-    border: 1px solid #eee;
-    border-radius: 50%;
+    // height: 130px;
+    // width: 130px;
+    // border: 1px solid #eee;
+    // border-radius: 50%;
     padding: 10px;
-    box-shadow: 0 0 10px #ddd;
+    // box-shadow: 0 0 10px #ddd;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -100%);
-    background-color: #fff;
-
+    color: rgb(27, 27, 27);
+    transform: translate(-50%, -240%);
+    // background-color: #fff;
     img {
       width: 100%;
       height: 100%;
@@ -109,14 +112,12 @@ export default {
 .btns {
   display: flex;
   justify-content: flex-end;
+  margin-right:20px;
+  
 }
-.login_form {
-  width: 24%;
-  position: absolute;
-  left: 38%;
+.el-input{
+  width:90%;
+  margin-left:5%;
+}
 
-  bottom: 340px;
-  padding: 0 10px;
-  box-sizing: border-box;
-}
 </style>

@@ -3,16 +3,15 @@
     <!-- 头部区域 -->
     <el-header>
       <div>
-    
-        <span>香漫画</span>
+        <span>后台系统</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
     </el-header>
     <!-- 主体区域 -->
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse?'64px' : '200px'">
-        <div class="toggle-button" @click="toggleCollapse">|||</div>
+      <el-aside :width="isCollapse?'57px' : '189px'">
+        <div class="toggle-button" @click="toggleCollapse"  :title="this.isCollapse?'显示菜单':'折叠菜单'">|||</div>
         <!-- 侧边栏菜单区 -->
         <el-menu background-color="#333744" router text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="isCollapse" :collapse-transition="false">
           <!-- 一级菜单 -->
@@ -52,31 +51,27 @@ export default {
     return {
       //左侧菜单数据
  iconFontList:[
-   'icon-xitongshezhi',
-   'icon-quanxianguanli',
+  'icon-xitongshezhi',
+  'icon-quanxianguanli',
 'icon-kehuhuiyuanguanli',
 'icon-icon-',
 'icon-caiwu',
 'icon-rizhiguanli'
  ],
-
-
-
-
-
+ screenWidth:null,
         menulist:[
       {
-        name:'系统设置',
+        name:'股票信息',
         id:0,
        
         children:[
           {
-        aname:'系统设置',
-         path:'system',
+        aname:'股票信息',
+         path:'shares',
         },
         {
-        aname:'短信配置',
-         path:'rights',
+        aname:'持股信息',
+         path:'HoldShares',
         },
         {
         aname:'第三方登陆设置',
@@ -94,145 +89,7 @@ export default {
 
         ]
       },
-        {
-        name:'权限管理',
-        id:1,
-        children:[
-            {
-        aname:'管理员列表',
-         path:'AuthorityList',
-        },
-        {
-        aname:'用户组列表',
-         path:'echars'
-        },
-        {
-        aname:'菜单规则',
-        path:'AuthoUserList'
-        }
-
-        ]
-        },
-        {
-        name:'会员管理',
-        id:2,
-         
-        children:[
-          {
-        aname:'用户统计',
-        path:'userTotal'
-        },
-        {
-        aname:'会员列表',
-        path:'userList'
-        },
-        {
-        aname:'会员等级',
-        path:'userLevel'
-        },
-        {  
-      aname:'充值配置',
-      path:'paySetting'
-        },
-        {
-          aname:'举报用户',
-          path:'Report'
-        },
-         {
-          aname:'意见反馈',
-          path:'suggestion'
-        }
-        ]
-
-      },
-       {
-        name:'漫画管理',
-        id:3,
-        children:[
-          {
-        aname:'Banner管理',
-        path:'Banner'
-        },
-        {
-        aname:'首页栏目管理',
-        path:'HomeOne'
-        },
-        {
-        aname:'栏目广告',
-        path:'Advertising'
-        },
-{
-        aname:'首页推荐',
-        path:'HomeRecommend'
-        },
-        {
-        aname:'章节费用配置',
-        path:'ChapterCost'
-        },
-        {
-        aname:'签到推送',
-        path:'SignPush'
-        },
-{
-        aname:'推送配置',
-        path:'SignSetting'
-        },
-        {
-        aname:'全局弹窗',
-        path:'GlobalPopup'
-        },
-        {
-        aname:'书架管理',
-        path:'BookManagement'
-        },
-{
-        aname:'漫画分类',
-        path:'Cartonclassify'
-        },
-        {
-        aname:'漫画列表',
-        path:'CartonList'
-        },
-{
-        aname:'推广计划',
-        path:'PopularizationPlan'
-        }
-
-        ]
-      },
-      {
-        name:'财务统计',
-        id:4,
-         
-        children:[
-          {
-        aname:'充值统计',
-        path:'PaymentStatistics'
-        },
-        {
-        aname:'漫画充值',
-        path:'cartoonPay'
-        },
-        {
-        aname:'广告投放回收',
-        path:'Advertisement'
-        },
-{
-        aname:'充值列表',
-        path:'PayList'
-        },
-
-
-
-        ]
-      }
-      ,{
-        name:'日志管理',
-        id:5,
-      }
     ],
-     
-
       iconObj: {
         '125': 'iconfont icon-user',
         '103': 'iconfont icon-tijikongjian',
@@ -243,6 +100,16 @@ export default {
       // width:window.document.documentElement.clientWidth,
       isCollapse:false
     }
+  },
+  mounted(){
+    const that = this;
+//  挂载监听屏幕事件
+            window.onresize = () => {
+                return (() => {
+                    window.screenWidth = document.body.clientWidth
+                    that.screenWidth = window.screenWidth
+                })()
+            }
   },
   methods: {
     logout() {
@@ -262,7 +129,16 @@ export default {
       console.log(this.width);
     },
     //实时监听屏幕获取clientwitdh传递给this.widtth。
-  }
+  },
+  watch: {
+            screenWidth (val) {
+                if(val<1000){
+                  this.isCollapse = true;
+                }else{
+                  this.isCollapse = false;
+                }
+            }
+        }
 }
 </script>
 
@@ -310,4 +186,5 @@ export default {
   letter-spacing: 0.2em;
   cursor: pointer;
 }
+
 </style>

@@ -43,8 +43,35 @@ body,
   padding:15px;
 }
 .el-table th>.cell {
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  font-size:13px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 .el-table .cell {
-  white-space: nowrap;
+  /* white-space: nowrap; */
+}
+.el-table th>.cell {
+  /* white-space: nowrap; */
+  font-size:14px;
+  color: rgb(70, 70, 70);
+}
+.el-table .cell {
+  /* white-space: nowrap; */
+}
+.el-button{
+  height:32px !important;
+  line-height:11px;
+}
+.el-table td{
+    text-align: center;
+    padding:5px 0 0 0;
+    height:43px;
+}
+.el-table th{
+  text-align: center;
+  padding:5px 0 0 0;
+  background-color:rgba(120, 145, 167, 0.315);
+  height:43px;
 }

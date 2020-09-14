@@ -9,14 +9,9 @@ import '@/assets/fonts/iconfont.css'
 //树形table 已弃用
 // import TreeTable from 'vue-table-with-tree-grid'
 
-//导入富文本编辑器
-import VueQuillEditor from 'vue-quill-editor'
-//导入富文本编辑器对应的样式
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+
 //导入NProgress包对应的js和css
-import moment from 'moment'
+
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import echarts from 'echarts'
@@ -24,7 +19,7 @@ Vue.prototype.$echarts = echarts
 
 import axios from 'axios'
 //配置请求根路径
-axios.defaults.baseURL = 'http://192.168.1.8:8060/'
+axios.defaults.baseURL = 'http://shares.yixingyige.com/'
 //再request拦截器中，展示进度条 NProgress.start()
 axios.interceptors.request.use(config => {
   NProgress.start()
@@ -35,16 +30,16 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(config => {
   NProgress.done()
   return config
+
 })
 Vue.prototype.$http = axios
-Vue.prototype.$moment = moment
+
 
 Vue.config.productionTip = false
 
 // Vue.component('tree-table', TreeTable)
 
 //将富文本编辑器注册为全局可用的组件
-Vue.use(VueQuillEditor)
 
 Vue.filter('dateFormat', function(originVal) {
   const dt = new Date(originVal)

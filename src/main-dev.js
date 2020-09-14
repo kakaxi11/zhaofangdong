@@ -7,28 +7,22 @@ import '@/assets/css/global.css'
 // 字体图标
 import '@/assets/fonts/iconfont.css'
 
-//导入富文本编辑器
-import VueQuillEditor from 'vue-quill-editor'
-//导入富文本编辑器对应的样式
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+
 //导入NProgress包对应的js和css
 import NProgress from 'nprogress'
-import moment from 'moment'
 import 'nprogress/nprogress.css'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
 import axios from 'axios'
 //配置请求根路径
-axios.defaults.baseURL = 'http://192.168.1.8:8060/'
+axios.defaults.baseURL = 'http://shares.yixingyige.com/'
 
 
 //再request拦截器中，展示进度条 NProgress.start()
 axios.interceptors.request.use(config => {
         NProgress.start()
-        config.headers.Authorization ="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiY3JlYXRlZCI6MTU4OTUyNDg2MTYzNywicm9sZXMiOiJbXCJhZG1pblwiXSIsImlkIjoiMyIsImV4cCI6MTU5MDEyOTY2MSwidG9rZW4iOiI1OWU3MmY1YWNmZjc0MjQ4YmMwYWQzYmY2MTZkNjk0ZCJ9.JDgl1Je5rR5XrCc5yRwU5OprQskTLnmRiyg7DP0monjXWMP34gSH1-6ZuxCdJFZOCpej33534Hp8qknD39VGTQ"
+        config.headers.Authorization = window.sessionStorage.getItem('token')
         return config
     })
     //在response拦截器中，隐藏进度条 NProgress.done()
@@ -37,12 +31,12 @@ axios.interceptors.response.use(config => {
     return config
 })
 Vue.prototype.$http = axios
-Vue.prototype.$moment = moment
+
 
 Vue.config.productionTip = false
 
 //将富文本编辑器注册为全局可用的组件
-Vue.use(VueQuillEditor)
+
 
 Vue.filter('dateFormat', function(originVal) {
     const dt = new Date(originVal)

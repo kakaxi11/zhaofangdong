@@ -1,7 +1,7 @@
 module.exports = {
+    publicPath: './', 
     chainWebpack: config => {
         //通过chainwebpack(链式编程方式)进行webpack设置  
-
         //调用config的when函数判断 如果当前处于发布模式则修改打包入口文件为
         config.when(process.env.NODE_ENV === 'production', config => {
                 config

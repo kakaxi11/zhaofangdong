@@ -43,8 +43,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Dropdown,
-
-
+  Link,
 } from 'element-ui'
 
 
@@ -92,6 +91,8 @@ Vue.use(Button)
   .use(DropdownMenu)
   .use(DropdownItem)
   .use(Dropdown)
+  .use(Link)
+  
   
 
 Vue.prototype.$message = Message
